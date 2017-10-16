@@ -42,9 +42,9 @@ int medianIndex(int arr[], int low, int high){
 
 
 
-// quicksort := Integer[], Integer, Integer -> void
+// QuickSort := Integer[], Integer, Integer -> void
 // obj.: recieves a vector and orders it in a crescent order
-void quicksort(int arr[], int low, int high){
+void QuickSort(int arr[], int low, int high){
 	int pivotIndex = medianIndex(arr, low, high);
 	int pivot = arr[pivotIndex];
 
@@ -71,10 +71,7 @@ void quicksort(int arr[], int low, int high){
 					i++;
 				}
 			}
-			// printf("i = %d, j = %d\n", i, j);
 		}
-		// printf("out: ");
-		// printhl(arr, low, high);
 		
 		int middlePartitionEnd = i-1;
 		i = low; j = middlePartitionEnd;
@@ -91,10 +88,16 @@ void quicksort(int arr[], int low, int high){
 			}else
 				i++;	
 		}
-		// printf("next-left -> %d and %d\nnext-right -> %d and %d\n", low, i-1 ,middlePartitionEnd+1, high);
-		quicksort(arr, low, i-1);
-		quicksort(arr, middlePartitionEnd+1, high);
+		QuickSort(arr, low, i-1);
+		QuickSort(arr, middlePartitionEnd+1, high);
 	}
+}
+
+// quicksort := Integer[], Integer -> void
+// obj.: wrapper for QuickSort so that you can order it
+// passing just a pointer to the vector and its size
+void quicksort(int arr[], int size){
+	QuickSort(arr, 0, size-1);
 }
 
 // Unoptimized classic quicksort
