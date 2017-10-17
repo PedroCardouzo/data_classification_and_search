@@ -1,10 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-
-// size bigger than about 2.000.000 raise segmentation fault 
-#define SIZE 2000000
 
 typedef struct STRUCT_STACK STACK;
 struct STRUCT_STACK{
@@ -13,29 +8,12 @@ struct STRUCT_STACK{
 	STACK *next;
 };
 
+// everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
+extern int comps; //#
+extern int swaps; //#
 
-int *array;
-char gc;
-int global_ss;
-void debug(char n){
-	if(global_ss == 256){
-		printf("IM HERE = %d\n", n);
-	}
-}
+int *array; // for debugging purposes
 
-void prints(STACK *s){
-	int *arr = s->baseAddr;
-	int i = 0;
-	
-	printf("arr[0] = %d\n", arr[0]);
-
-	while(array != arr) if(i++ > SIZE) break;
-	
-	printf("position = %d\n", i);
-	for(i; i<SIZE; i++)
-		printf("%d ", arr[i]);
-
-}
 
 STACK** initializeStack(){
 	STACK **stack = (STACK **) malloc(sizeof(STACK *));
@@ -51,19 +29,6 @@ void push(int *baseAddr, int length, STACK **stack){
 	*stack = new;
 }
 
-void printRun(int arr[], int size){
-	printf("\nPrinting Run:\n");
-	for(int i=0; i<size; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-}
-
-void printRuns(STACK *stack){
-	while(stack != NULL){
-		printRun(stack->baseAddr, stack->length);
-		stack = stack->next;
-	}
-}
 
 void destroyStack(STACK **stack){
 	STACK *aux = *stack, *prev;
@@ -94,13 +59,6 @@ void invertVector(int vector[], int leftIndex, int rightIndex){
 		leftIndex++;
 		rightIndex--;
 	}
-}
-
-
-void print(int arr[], int size){
-	for(int i=0; i<size; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
 }
 
 // A binary search based function to find the position
@@ -158,10 +116,7 @@ void merge(int vec[], int len1, int len2){
 		memcpy(vec, aux, (j+1)*sizeof(int));
 }
 
-int belongs(int arr[]){
-	// printf("array[SIZE-1]-array = %lld  ==  %lld\n", (unsigned long long int)(array+SIZE-1-array), (unsigned long long int)SIZE-1);
-	return arr-array <= SIZE-1; 
-}
+
 
 void mergeStacks(STACK **stack){
 	
@@ -192,13 +147,7 @@ void mergeStacks(STACK **stack){
 	}
 }
 
-int validateStack(STACK *stack){
-	while(stack != NULL){
-		if(belongs(stack->baseAddr) == 0) return 0;
-		stack = stack->next;
-	}
-	return 1;
-}
+
 
 void timsort(int vector[], int size){
 	int minrun = getMinrun(size), runsize;
@@ -266,66 +215,4 @@ void timsort(int vector[], int size){
 
 	destroyStack(stack);
 	free(stack);
-}
-
-void fillDecrescent(int vec[]){
-	for(int i=0; i<SIZE; i++)
-		vec[i] = SIZE-i;
-}
-
-// isCrescent := Integer[], Integer -> Integer
-// obj.: checks if an array is sorted in crescent order. If it isn't it logs the errors and the positions which they occurr
-// returns the number of errors
-int isCrescent(int arr[], int size){
-	int errors=0;
-	for(int i=1; i<size; i++){
-		if(arr[i-1] > arr[i]){
-			printf("%d and %d, @ %d and %d\n", arr[i-1], arr[i], i-1, i);
-			errors++;
-		}
-	}
-	return errors;
-}
-
-// int main(){
-
-// 	int arr[SIZE];
-
-// 	for(int i=0; i < SIZE/2; i++)
-// 		arr[i] = i;
-
-// 	for(int i=SIZE/2; i < SIZE; i++)
-// 		arr[i] = i;
-
-// 	timsort(arr, SIZE);
-
-// 	// print(arr, SIZE);
-
-// 	if(isCrescent(arr, SIZE))
-// 		printf("Okay\n");
-// 	else
-// 		printf("ERROR\n");
-// }
-int main(){
-	int arr[SIZE];
-	array = arr;
-	int counter = 0;
-	char errors = 0;
-	do{
-		for(int a = SIZE-1; a >= 0; a--)
-			arr[a] = rand();
-
-		clock_t beg = clock();
-		timsort(arr, SIZE);
-		clock_t delta = clock() - beg;
-		
-		if((errors = isCrescent(arr, SIZE)) == 0)
-			counter++;
-		else
-			printf("UNORDERED\n");
-
-		printf("sort #%d runtime (new): %lf\n", counter, (double)delta/CLOCKS_PER_SEC);
-
-	}while(errors == 0);
-	// print(arr, SIZE);
 }

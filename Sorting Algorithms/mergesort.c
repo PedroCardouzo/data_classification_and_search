@@ -1,19 +1,9 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
-// size bigger than about 2.000.000 raise segmentation fault 
-#define SIZE 2000000
-
+// everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
 extern int comps;
 extern int swaps;
-
-void print(int arr[], int size){
-	for(int i=0; i<size; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-}
 
 // mergesort: Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order
@@ -48,44 +38,4 @@ void mergesort(int vector[], int size){
 
 		free(temp);
 	}
-}
-
-void fillDecrescent(int vec[]){
-	for(int i=0; i<SIZE; i++)
-		vec[i] = SIZE-i;
-}
-
-// isCrescent := Integer[], Integer -> Integer
-// obj.: checks if an array is sorted in crescent order. If it isn't it logs the errors and the positions which they occurr
-// returns the number of errors
-int isCrescent(int arr[], int size){
-	int errors=0;
-	for(int i=1; i<size; i++){
-		if(arr[i-1] > arr[i]){
-			printf("%d and %d, @ %d and %d\n", arr[i-1], arr[i], i-1, i);
-			errors++;
-		}
-	}
-	return errors;
-}
-
-int main(){
-	int arr[SIZE];
-	int counter = 0;
-	char errors = 0;
-	do{
-		for(int a = SIZE-1; a >= 0; a--)
-			arr[a] = rand();
-
-			clock_t beg = clock();
-			mergesort(arr, SIZE);
-			clock_t delta = clock() - beg;
-			
-			if((errors = isCrescent(arr, SIZE)) == 0)
-				counter++;
-
-			printf("sort #%d runtime (new): %lf\n", counter, (double)delta/CLOCKS_PER_SEC);
-
-	}while(errors == 0);
-	print(arr, SIZE);
 }
