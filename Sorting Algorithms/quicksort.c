@@ -5,15 +5,18 @@
 // size bigger than about 2.000.000 raise segmentation fault 
 #define SIZE_ARR 2000000
 
-// print := Integer[] -> void
+extern int comps;
+extern int swaps;
+
+// print: Integer[] -> void
 // Obj.: prints the whole array into the screen
-void print(int arr[]){
-	for(int i=0; i<SIZE_ARR; i++)
+void print(int arr[], int size){
+	for(int i=0; i<size; i++)
 		printf("%d ", arr[i]);
 	printf("\n");
 }
 
-// print := Integer[] -> void
+// print: Integer[] -> void
 // Obj.: prints the whole array into the screen
 void printhl(int arr[], int lo, int hi){
 	for(int i=lo; i<=hi; i++)
@@ -21,7 +24,7 @@ void printhl(int arr[], int lo, int hi){
 	printf("\n");
 }
 
-// medianIndex := Integer[], Integer, Integer -> Integer
+// medianIndex: Integer[], Integer, Integer -> Integer
 // Obj: calculate the median between three values from an array, these values are at low, high and (high+low)/2, rounded up
 // returns the index where the median element is located in the array
 int medianIndex(int arr[], int low, int high){
@@ -42,7 +45,7 @@ int medianIndex(int arr[], int low, int high){
 
 
 
-// QuickSort := Integer[], Integer, Integer -> void
+// QuickSort: Integer[], Integer, Integer -> void
 // obj.: recieves a vector and orders it in a crescent order
 void QuickSort(int arr[], int low, int high){
 	int pivotIndex = medianIndex(arr, low, high);
@@ -53,6 +56,7 @@ void QuickSort(int arr[], int low, int high){
 
 
 	if(high-low > 0){
+
 		// printf("pivot = %d, low = %d, high = %d \n", pivot, low, high);
 		// printf("in: ");
 		// printhl(arr, low, high);
@@ -93,7 +97,7 @@ void QuickSort(int arr[], int low, int high){
 	}
 }
 
-// quicksort := Integer[], Integer -> void
+// quicksort: Integer[], Integer -> void
 // obj.: wrapper for QuickSort so that you can order it
 // passing just a pointer to the vector and its size
 void quicksort(int arr[], int size){
@@ -128,10 +132,22 @@ void quicksort_old(int arr[], int low, int high){
 	}
 }
 
-// isCrescent := Integer[], Integer -> Integer
+// isCrescent: Integer[], Integer -> Integer
+// obj.: checks if an array is sorted in crescent order. 
+// returns true(1) if it is, false(0) if it isn't
+int isCrescent(int arr[], int size){
+	for(int i=1; i<size; i++){
+		if(arr[i-1] > arr[i])
+			return 0;
+	}
+	return 1;
+}
+
+
+// errorLogger: Integer[], Integer -> Integer
 // obj.: checks if an array is sorted in crescent order. If it isn't it logs the errors and the positions which they occurr
 // returns the number of errors
-int isCrescent(int arr[], int size){
+int errorLogger(int arr[], int size){
 	int errors=0;
 	for(int i=1; i<size; i++){
 		if(arr[i-1] > arr[i]){
@@ -142,7 +158,7 @@ int isCrescent(int arr[], int size){
 	return errors;
 }
 
-//* // this tests stability of the algorithm. It keeps looping until an error occurs (the array isn't crescently ordered)
+/* // this tests stability of the algorithm. It keeps looping until an error occurs (the array isn't crescently ordered)
 int main(){
 	int arr[SIZE_ARR];
 	int counter = 0;
@@ -152,7 +168,7 @@ int main(){
 			arr[a] = rand()%256;
 
 			clock_t beg = clock();
-			quicksort(arr, 0, SIZE_ARR-1);
+			quicksort(arr, SIZE_ARR);
 			clock_t delta = clock() - beg;
 			
 			if((errors = isCrescent(arr, SIZE_ARR)) == 0)

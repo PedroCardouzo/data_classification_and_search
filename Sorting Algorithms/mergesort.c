@@ -6,6 +6,8 @@
 // size bigger than about 2.000.000 raise segmentation fault 
 #define SIZE 2000000
 
+extern int comps;
+extern int swaps;
 
 void print(int arr[], int size){
 	for(int i=0; i<size; i++)
@@ -29,6 +31,7 @@ void mergesort(int vector[], int size){
 		int *temp = (int *) malloc(sizeof(int)*size);
 
 		while(i < half_size && j < size){
+			swaps++;
 			if(vector[i] <= vector[j])
 				temp[k++] = vector[i++];
 			else
