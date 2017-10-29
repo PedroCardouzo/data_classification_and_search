@@ -1,10 +1,5 @@
 #include <stdlib.h>
 #include <string.h>
-
-// everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
-extern int comps;
-extern int swaps;
-
 // mergesort: Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order
 // uses memcpy for speed benefits when possible

@@ -1,7 +1,3 @@
-// everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
-extern int comps; //#
-extern int swaps; //#
-
 void heapfy(int arr[], int heap_size, int i){
 	int larger, aux, is_a_heap=0; 
 	while(!is_a_heap){

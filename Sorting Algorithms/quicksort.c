@@ -1,7 +1,3 @@
-// everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
-extern int comps; //#
-extern int swaps; //#
-
 // medianIndex: Integer[], Integer, Integer -> Integer
 // Obj: calculate the median between three values from an array, these values are at low, high and (high+low)/2, rounded up
 // returns the index where the median element is located in the array
