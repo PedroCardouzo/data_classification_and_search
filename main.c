@@ -5,15 +5,17 @@
  * The output format is :                                *
  * 	sort_id, array_type, size, swaps, comparisons, time  *
  *********************************************************/
-// ## -> to erase
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-//for interruption
+
+// for interruption
 #include <signal.h>
 #include <unistd.h>
 
+// sorting algorithms
 #include "Sorting Algorithms/util.h"
 
 #include "Sorting Algorithms/binaryInsertionSort.h"
