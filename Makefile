@@ -11,8 +11,10 @@ main.o: main.c Sorting\ Algorithms/util.h Sorting\ Algorithms/binaryInsertionSor
 SortingAlgorithms: 
 		+$(MAKE) -C Sorting\ Algorithms
 
+clean:
+		rm -rf main.o
+
 cleanall:
 		rm -rf main.o exec ./Sorting\ Algorithms/*.o
 
-clean:
-		rm -rf main.o
+cleanr: cleanall
