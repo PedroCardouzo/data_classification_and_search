@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "mergesort.h"
 
 // everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
 extern int comps;

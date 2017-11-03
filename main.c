@@ -12,8 +12,19 @@
 #include <time.h>
 
 #include "Sorting Algorithms/util.h"
+
+#include "Sorting Algorithms/binaryInsertionSort.h"
+#include "Sorting Algorithms/linearInsertionSort.h"
+#include "Sorting Algorithms/selectionSort.h"
+#include "Sorting Algorithms/bubbleSort.h"
+
+
 #include "Sorting Algorithms/quicksort.h"
 #include "Sorting Algorithms/mergesort.h"
+#include "Sorting Algorithms/heapsort.h"
+#include "Sorting Algorithms/timsort.h"
+
+
 
 #define SIZE_MAX 10000000
 #define INPUT_FILENAME "randomnumbers.bin"
@@ -90,6 +101,8 @@ int main(){
 
 	fullBenchmark(quicksort, "QukS");
 	fullBenchmark(mergesort, "MerS");
+	fullBenchmark(heapsort, "HepS");
+	fullBenchmark(timsort, "TimS");
 
 	free(arr_random);
 	free(arr_crescent);

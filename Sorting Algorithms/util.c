@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-typedef void (SORTING_FUNCTION)(int*, int);
+
+#include "util.h"
+
 
 // print: Integer[] -> void
 // Obj.: prints the whole array into the screen

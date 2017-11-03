@@ -1,3 +1,10 @@
+typedef struct STRUCT_STACK STACK;
+struct STRUCT_STACK{
+	int *baseAddr;
+	int length;
+	STACK *next;
+};
+
 STACK** initializeStack();
 void push(int *baseAddr, int length, STACK **stack);
 void destroyStack(STACK **stack);

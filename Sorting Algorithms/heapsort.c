@@ -1,3 +1,5 @@
+#include "heapsort.h"
+
 // everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
 extern int comps; //#
 extern int swaps; //#

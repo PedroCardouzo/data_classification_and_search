@@ -1,5 +1,8 @@
+#include "linearInsertionSort.h"
+
 extern int comps;
 extern int swaps;
+
 
 //linearInsertionSort:Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order 
@@ -31,5 +34,3 @@ void insertion(int vector[], int n, int size){
 	swaps++;
     vector[i]= n;
 }
-
-

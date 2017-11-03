@@ -1,13 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "binaryInsertionSort.h"
+#include "timsort.h"
 
-typedef struct STRUCT_STACK STACK;
-struct STRUCT_STACK{
-	int *baseAddr;
-	int length;
-	STACK *next;
-};
 
 // everything marked with //# is for algorithm evaluation (testing number of comparisons and such)
 extern int comps; //#

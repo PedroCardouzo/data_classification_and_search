@@ -1,3 +1,5 @@
+#include "binaryInsertionSort.h"
+
 extern int comps;
 extern int swaps;
 

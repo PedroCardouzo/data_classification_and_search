@@ -1,3 +1,5 @@
+#include "bubbleSort.h"
+
 extern int comps;
 extern int swaps;
 
