@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+typedef void (SORTING_FUNCTION)(int*, int);
+
 // print: Integer[] -> void
 // Obj.: prints the whole array into the screen
 void print(int arr[], int size){
@@ -44,6 +49,8 @@ int errorLogger(int arr[], int size){
 }
 
 
+//uses typedef void (SORTING_FUNCTION)(int*, int); function type definition (may use another you prefer)
+
 // stressTest: SORTING_FUNCTION, Integer[], Integer, const long Integer -> Integer
 // tests provided sorting function on a random array of length size up to MAX_TESTS times
 // if MAX_TESTS is 0, it tests until a failure occurs or the user force closes the program
@@ -61,7 +68,7 @@ int stressTest(SORTING_FUNCTION *sorting_function, int arr[], int size, const un
 			
 			if((errors = errorLogger(arr, size)) == 0){
 				counter++;
-				printf("sort #%d runtime (new): %lf\n", counter, (double)delta/CLOCKS_PER_SEC);
+				printf("sort #%ld runtime (new): %lf\n", counter, (double)delta/CLOCKS_PER_SEC);
 			}else{
 				printf("%d ERRORS ON SORTING!\n", errors);
 				return -1;
@@ -76,53 +83,4 @@ int stressTest(SORTING_FUNCTION *sorting_function, int arr[], int size, const un
 // a faliure occurs or until the user force closes it
 int unlimitedStressTest(SORTING_FUNCTION *sorting_function, int arr[], int size){
 	stressTest(sorting_function, arr, size, 0);
-}
-
-
-//timsort exclusives
-
-int validateStack(STACK *stack){
-	while(stack != NULL){
-		if(belongs(stack->baseAddr) == 0) return 0;
-		stack = stack->next;
-	}
-	return 1;
-}
-
-int belongs(int arr[]){
-	return arr-array <= SIZE-1; 
-}
-
-void debug(char n){
-	if(global_ss == 256){
-		printf("IM HERE = %d\n", n);
-	}
-}
-
-void prints(STACK *s){
-	int *arr = s->baseAddr;
-	int i = 0;
-	
-	printf("arr[0] = %d\n", arr[0]);
-
-	while(array != arr) if(i++ > SIZE) break;
-	
-	printf("position = %d\n", i);
-	for(i; i<SIZE; i++)
-		printf("%d ", arr[i]);
-
-}
-
-void printRun(int arr[], int size){
-	printf("\nPrinting Run:\n");
-	for(int i=0; i<size; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-}
-
-void printRuns(STACK *stack){
-	while(stack != NULL){
-		printRun(stack->baseAddr, stack->length);
-		stack = stack->next;
-	}
 }

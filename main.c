@@ -3,10 +3,11 @@
 #include <string.h>
 #include <time.h>
 #include "Sorting Algorithms/quicksort.h"
+#include "Sorting Algorithms/util.h"
 
 #define SIZE_MAX 10000000
 #define INPUT_FILENAME "randomnumbers.bin"
-#define OUTPUT_FILENAME "R00275739-.txt"
+#define OUTPUT_FILENAME "R00275739-00268612.txt"
 
 // error log:
 // 0: program finished as expected
@@ -17,6 +18,7 @@
 
 typedef void (SORTING_FUNCTION)(int*, int);
 
+int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id);
 int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const char* sort_id, char arr_id);
 int appendToOutput(char *string, char *filename);
 int exists(const char *fname);
@@ -24,13 +26,18 @@ int exists(const char *fname);
 int comps;
 int swaps;
 
+unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
+
+	
 int main(){
-	unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
+	// allocating space for the arrays
 	arr_random = (int*) malloc(SIZE_MAX*sizeof(int));
 	arr_crescent = (int*) malloc(SIZE_MAX*sizeof(int));
 	arr_decrescent = (int*) malloc(SIZE_MAX*sizeof(int));
 	arr_aux = (int*) malloc(SIZE_MAX*sizeof(int));
 
+
+	// checks if the input file exists, if it does, read its information into arr_random
 	FILE *input = fopen(INPUT_FILENAME, "rb");
 	if(!input){
 		printf("Error! Couldn't open or find %s in current directory!\n", INPUT_FILENAME);
@@ -44,6 +51,7 @@ int main(){
 		}
 		fclose(input);
 	}
+	// create arrays (random, ordered, unordered)
 	memcpy((void *)arr_crescent, (void *)arr_random, SIZE_MAX*sizeof(int));
 	quicksort(arr_crescent, SIZE_MAX); // arr_crescent recieves the crescent ordered version of arr_random
 
@@ -51,7 +59,6 @@ int main(){
 		arr_decrescent[i] =  arr_crescent[SIZE_MAX-1-i]; // arr_decrescent recieves the decrescent ordered version of arr_random
 
 	// open output file
-
 	if(exists(OUTPUT_FILENAME)){
 		printf("The file %s already exists.\nDo you want to overwrite it? (y for yes)", OUTPUT_FILENAME);
 		char overwrite = 0;
@@ -69,33 +76,39 @@ int main(){
 	}else
 		fclose(output); // file will be opened each time we write a line to it, so we can close it now
 		
+	// now we benchmark all functions
 
-	// now benchmark the functions
+	fullBenchmark(quicksort, "QukS");
 
-	// quicksort (QukS)
-		// Random
-		for(int i=1000; i <= 10000000; i*=10){
-			memcpy((void *)arr_aux, (void *)arr_random, SIZE_MAX*sizeof(int));
-			benchmark(quicksort, arr_aux, i, "QukS", 'R');
-		}
-/* when i fix the order i can put this back
-		// Crescent
-		for(int i=1000; i <= 10000000; i*=10){
-			memcpy((void *)arr_aux, (void *)arr_crescent, SIZE_MAX*sizeof(int));
-			benchmark(quicksort, arr_aux, i, "QukS", 'O');
-		}
-		// decrescent
-		for(int i=1000; i <= 10000000; i*=10){
-			memcpy((void *)arr_aux, (void *)arr_decrescent, SIZE_MAX*sizeof(int));
-			benchmark(quicksort, arr_aux, i, "QukS", 'I');
-		}
 
-*/
 	free(arr_random);
 	free(arr_crescent);
 	free(arr_decrescent);
 	free(arr_aux);
 	return 0;
+}
+
+int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
+	// now benchmark the functions
+
+	// random
+	for(int i=1000; i <= SIZE_MAX; i*=10){
+		memcpy((void *)arr_aux, (void *)arr_random, SIZE_MAX*sizeof(int));
+		benchmark(quicksort, arr_aux, i, sort_id, 'R');
+	}
+/*// when i fix the order i can put this back
+	// crescent
+	for(int i=1000; i <= SIZE_MAX; i*=10){
+		memcpy((void *)arr_aux, (void *)arr_crescent, SIZE_MAX*sizeof(int));
+		benchmark(quicksort, arr_aux, i, "QukS", 'O');
+	}
+	// decrescent
+	for(int i=1000; i <= SIZE_MAX; i*=10){
+		memcpy((void *)arr_aux, (void *)arr_decrescent, SIZE_MAX*sizeof(int));
+		benchmark(quicksort, arr_aux, i, "QukS", 'I');
+	}
+//*/
+
 }
 
 // benchmark: SORTING_FUNCTION, Integer[], Integer, String, Char -> Integer
@@ -131,9 +144,10 @@ int appendToOutput(char *string, char *filename){
 		return -1;
 	}else{
 		// fseek(output, 0, SEEK_END);
-		if(fprintf(output, "%s", string) < 0)
+		if(fprintf(output, "%s", string) < 0){
 			printf("ERROR WRITING TO  %s\n", filename);
-		return -2;
+			return -2;
+		}
 	}
 	fclose(output);
 	return 0;

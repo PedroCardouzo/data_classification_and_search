@@ -1,3 +1,6 @@
+// sorting function type
+typedef void (SORTING_FUNCTION)(int*, int);
+
 // print: Integer[] -> void
 // Obj.: prints the whole array into the screen
 void print(int arr[], int size);
@@ -20,10 +23,3 @@ typedef void (SORTING_FUNCTION)(int*, int);
 int stressTest(SORTING_FUNCTION *sorting_function, int arr[], int size, const unsigned long int MAX_TESTS);
 int unlimitedStressTest(SORTING_FUNCTION *sorting_function, int arr[], int size);
 
-//timsort debugging exclusives
-int validateStack(STACK *stack);
-int belongs(int arr[]);
-void debug(char n);
-void prints(STACK *s);
-void printRun(int arr[], int size);
-void printRuns(STACK *stack);
