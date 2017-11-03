@@ -1,5 +1,6 @@
 #include "selectionSort.h"
 
+extern char OVERTIME_FLAG;
 extern int comps;
 extern int swaps;
 
@@ -22,6 +23,8 @@ void selectionSort(int vector[], int size){
                 vector[j] = temp;
                 vector[i] = min;
             }
+            if(OVERTIME_FLAG)
+                return;
         }
     }
 }

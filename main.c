@@ -1,6 +1,6 @@
 /*********************************************************
  * This program benchmarks sorting algorithms            *
- *                                                       *
+ * Take a look at main.h for documentation aswell        *
  * The output file is defined at OUTPUT_FILENAME         *
  * The output format is :                                *
  * 	sort_id, array_type, size, swaps, comparisons, time  *
@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+//for interruption
+#include <signal.h>
+#include <unistd.h>
 
 #include "Sorting Algorithms/util.h"
 
@@ -24,26 +27,9 @@
 #include "Sorting Algorithms/heapsort.h"
 #include "Sorting Algorithms/timsort.h"
 
+#include "main.h"
 
-
-#define SIZE_MAX 10000000
-#define INPUT_FILENAME "randomnumbers.bin"
-#define OUTPUT_FILENAME "R00275739-00268612.txt"
-
-// error log:
-// 0: program finished as expected
-// 1: couldn't open/find input file
-// 2: couldn't read from input file
-// 3: output file already exists and you don't want to overwrite it
-// 4: couldn't open/create output file
-
-typedef void (SORTING_FUNCTION)(int*, int);
-
-int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id);
-int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const char* sort_id, char arr_id);
-int appendToOutput(char *string, char *filename);
-int exists(const char *fname);
-
+char OVERTIME_FLAG;
 unsigned long int comps;
 unsigned long int swaps;
 
@@ -51,6 +37,7 @@ unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
 
 	
 int main(){
+
 	// allocating space for the arrays
 	arr_random = (int*) malloc(SIZE_MAX*sizeof(int));
 	arr_crescent = (int*) malloc(SIZE_MAX*sizeof(int));
@@ -81,7 +68,7 @@ int main(){
 
 	// open output file
 	if(exists(OUTPUT_FILENAME)){
-		printf("The file %s already exists.\nDo you want to overwrite it? (y for yes)", OUTPUT_FILENAME);
+		printf("The file %s already exists.\nDo you want to overwrite it? (y for yes) ", OUTPUT_FILENAME);
 		char overwrite = 0;
 		scanf(" %c", &overwrite);
 
@@ -97,12 +84,17 @@ int main(){
 	}else
 		fclose(output); // file will be opened each time we write a line to it, so we can close it now
 		
+	// get time interruption ready 
+	signal(SIGALRM, set_OVERTIME_FLAG);
+	
+
 	// now we benchmark all functions
 
 	fullBenchmark(quicksort, "QukS");
 	fullBenchmark(mergesort, "MerS");
 	fullBenchmark(heapsort, "HepS");
 	fullBenchmark(timsort, "TimS");
+	fullBenchmark(binaryInsertionSort, "ISBB");
 
 	free(arr_random);
 	free(arr_crescent);
@@ -138,21 +130,35 @@ int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
 // "sort_id, arr_id, size of array, number of swaps, number of comparisons, elapsed time"
 // the returned value a Integer where 0 is successful and any other number is a error code
 int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const char* sort_id, char arr_id){
+	OVERTIME_FLAG = 0;
 	comps = 0;
 	swaps = 0;
 	
 	clock_t delta = clock();
+	
+	alarm(TIME_LIMIT); // sets a time interruption in TIME_LIMIT seconds
+	
 	(*sorting_function)(array, size); // run the sorting function on the array of length size
+	
+	alarm(0); // clears time interruption timer
+
 	delta = clock()-delta; // difference between clocks from before and after the function
 	int time = delta/(CLOCKS_PER_SEC/1000);
 
-	if(isCrescent(array, size)) // checks if the array was successfuly sorted in O(n)
+	if(OVERTIME_FLAG)
+		printf("Sorting Took Too Long (more than %d seconds)\n", TIME_LIMIT);
+
+	else if(isCrescent(array, size)) // checks if the array was successfuly sorted in O(n)
 		printf("Sorting Successful!\n");
+
 	else
 		printf("ERROR! SORTING FAILED!\n");
 
 	char *result = (char *) malloc(sizeof(char)*100);
-	sprintf(result, "%s, %c, %u, %lu, %lu, %u.\n", sort_id, arr_id, size, swaps, comps, time);
+	if(OVERTIME_FLAG == 0)
+		sprintf(result, "%s, %c, %u, %lu, %lu, %u.\n", sort_id, arr_id, size, swaps, comps, time);
+	else
+		sprintf(result, "%s, %c, %u, *, *, *.\n", sort_id, arr_id, size);
 	
 	int status = appendToOutput(result, OUTPUT_FILENAME);
 	free(result);
@@ -160,6 +166,8 @@ int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const c
 	
 }
 
+// appendToOutput: String String -> int
+// obj.: appends the string to the end of the file with name filename
 int appendToOutput(char *string, char *filename){
 	FILE *output = fopen(filename, "a");
 	if(output==NULL){
@@ -185,4 +193,12 @@ int exists(const char *fname){
 		return 1;
 	}else
 		return 0;
+}
+
+
+// set_OVERTIME_FLAG: void -> void
+// obj.: sets OVERTIME_FLAG to 1 (true), that means that the algorithm was running for more than TIME_LIMIT seconds
+void set_OVERTIME_FLAG(){
+	OVERTIME_FLAG = 1;
+	return;
 }

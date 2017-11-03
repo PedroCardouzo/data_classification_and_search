@@ -1,5 +1,6 @@
 #include "binaryInsertionSort.h"
 
+extern char OVERTIME_FLAG;
 extern int comps;
 extern int swaps;
 
@@ -27,6 +28,8 @@ void binaryInsertion(int vector[], int n, int size){
         temp = n;
 		n = vector[i];
 		vector[i] = temp;
+        if(OVERTIME_FLAG)
+            return;
 	}
     
     swaps++;

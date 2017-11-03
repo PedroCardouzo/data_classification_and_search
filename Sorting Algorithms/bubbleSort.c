@@ -1,5 +1,6 @@
 #include "bubbleSort.h"
 
+extern char OVERTIME_FLAG;
 extern int comps;
 extern int swaps;
 
@@ -29,6 +30,8 @@ int pass(int vector[], int size){
             vector[i+1] = temp;
             flag = 0;
         }
+        if(OVERTIME_FLAG)
+            return;
     }
 
     return flag;
