@@ -11,7 +11,9 @@ int medianIndex(int arr[], int low, int high){
 
 	for(int repeat =1; repeat >= 0; repeat--) // do 2 times
 		for(int i=1; i<3; i++){
+			comps++;
 			if(arr[temp[i-1]] > arr[temp[i]]){
+				swaps++;
 				aux = temp[i-1];
 				temp[i-1] = temp[i];
 				temp[i] = aux;
@@ -39,14 +41,15 @@ void QuickSort(int arr[], int low, int high){
 		// printf("in: ");
 		// printhl(arr, low, high);
 		while(i <= j){
-
+			comps++;
 			if(arr[i] <= pivot)
 				i++;
 			else{
 
-				while(arr[j] > pivot && i<=j) j--;
+				while(arr[j] > pivot && i<=j){ j--; comps++;}
 
 				if(i < j){
+					swaps++;
 					temp = arr[j];
 					arr[j] = arr[i];
 					arr[i] = temp;
@@ -58,11 +61,12 @@ void QuickSort(int arr[], int low, int high){
 		int middlePartitionEnd = i-1;
 		i = low; j = middlePartitionEnd;
 		while(i <= j){
-			
+			comps++;
 			if(arr[i] == pivot){
-				while(arr[j] == pivot && i <= j) j--;
+				while(arr[j] == pivot && i <= j){ j--; comps++;}
 
 				if(i < j){
+					swaps++;
 					arr[i] = arr[j];
 					arr[j] = pivot;
 					i++;

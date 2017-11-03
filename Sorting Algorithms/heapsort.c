@@ -6,11 +6,17 @@ void heapfy(int arr[], int heap_size, int i){
 	int larger, aux, is_a_heap=0; 
 	while(!is_a_heap){
 		larger = i;
+
+		comps++;
 		if(2*i+1 < heap_size && arr[larger] < arr[2*i+1])
 			larger = 2*i+1;
+		
+		comps++;
 		if(2*i+2 < heap_size && arr[larger] < arr[2*i+2])
 			larger = 2*i+2;
+		
 		if(larger != i){
+			swaps++;
 			aux = arr[i];
 			arr[i] = arr[larger];
 			arr[larger] = aux;
@@ -35,7 +41,7 @@ void build_heap(int arr[], int heap_size){
 // (now the last element is not in the array anymore) 
 // and heapfy is called on the first element to make the array a heap again
 void heapExtract(int heap[], int *heap_size){
-	
+	swaps++;
 	int aux = heap[0];
 	heap[0] = heap[*heap_size-1];
 	heap[*heap_size-1] = aux;

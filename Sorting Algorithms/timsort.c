@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "binaryInsertionSort.h"
 
 typedef struct STRUCT_STACK STACK;
 struct STRUCT_STACK{
@@ -53,6 +54,7 @@ int getMinrun(int n){
 void invertVector(int vector[], int leftIndex, int rightIndex){
 	int aux;
 	while(leftIndex < rightIndex){
+		swaps++;
 		aux = vector[leftIndex];
 		vector[leftIndex] = vector[rightIndex];
 		vector[rightIndex] = aux;
@@ -61,45 +63,6 @@ void invertVector(int vector[], int leftIndex, int rightIndex){
 	}
 }
 
-// A binary search based function to find the position
-// where item should be inserted in a[low..high]
-int binarySearch(int a[], int item, int low, int high)
-{
-    if (high <= low)
-        return (item > a[low])?  (low + 1): low;
- 
-    int mid = (low + high)/2;
- 
-    if(item == a[mid])
-        return mid+1;
- 
-    if(item > a[mid])
-        return binarySearch(a, item, mid+1, high);
-    return binarySearch(a, item, low, mid-1);
-}
- 
-// Function to sort an array a[] of size 'n'
-void insertionSort(int a[], int n)
-{
-    int i, loc, j, k, selected;
- 
-    for (i = 1; i < n; ++i)
-    {
-        j = i - 1;
-        selected = a[i];
- 
-        // find location where selected sould be inseretd
-        loc = binarySearch(a, selected, 0, j);
- 
-        // Move all elements after location to create space
-        while (j >= loc)
-        {
-            a[j+1] = a[j];
-            j--;
-        }
-        a[j+1] = selected;
-    }
-}
 
 void merge(int vec[], int len1, int len2){
 	int i = len1-1, j = len2-1, k = j+len1;
@@ -107,11 +70,14 @@ void merge(int vec[], int len1, int len2){
 	memcpy(aux, vec+len1, len2*sizeof(int));
 	
 	while(i >= 0 && j >= 0){
+		comps++;
+		swaps += k%2; // because each 2 attribuitions will count as one swap
 		if(vec[i] >= aux[j])
 			vec[k--] = vec[i--];
 		else
 			vec[k--] = aux[j--];
 	}
+	swaps++;
 	if(j >= 0)
 		memcpy(vec, aux, (j+1)*sizeof(int));
 }
@@ -159,14 +125,15 @@ void timsort(int vector[], int size){
 	while(pos < size){
 		pos++;
 		init = pos-1;
+		comps++;
 		if(pos < size && vector[init] > vector[pos]){
 
-			while(vector[pos-1] > vector[pos]) pos++;
+			while(vector[pos-1] > vector[pos]){ pos++; comps++;}
 			invertVector(vector, init, pos-1);
-		
+
 		}else{
 		
-			while(pos < size && vector[pos-1] <= vector[pos]) pos++;
+			while(pos < size && vector[pos-1] <= vector[pos]){ pos++; comps++;}
 				
 		}
 		runsize = pos-init;
@@ -175,7 +142,7 @@ void timsort(int vector[], int size){
 		// make sure that each run is at least minrun size, unless it is the last one (this also includes case where whole vector is smaller than minrun)
 		if(size-init <= minrun){
 		
-			insertionSort(vector+init, size-init);
+			binaryInsertionSort(vector+init, size-init); // marker
 			push(vector+init, size-init, stack);
 			break;
 		
@@ -184,7 +151,7 @@ void timsort(int vector[], int size){
 		
 		else{
 			pos -= runsize;
-			insertionSort(vector+init, minrun);
+			binaryInsertionSort(vector+init, minrun);
 			pos += minrun;
 			push(vector+init, minrun, stack);
 		}

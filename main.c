@@ -1,9 +1,19 @@
+/*********************************************************
+ * This program benchmarks sorting algorithms            *
+ *                                                       *
+ * The output file is defined at OUTPUT_FILENAME         *
+ * The output format is :                                *
+ * 	sort_id, array_type, size, swaps, comparisons, time  *
+ *********************************************************/
+// ## -> to erase
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "Sorting Algorithms/quicksort.h"
+
 #include "Sorting Algorithms/util.h"
+#include "Sorting Algorithms/quicksort.h"
+#include "Sorting Algorithms/mergesort.h"
 
 #define SIZE_MAX 10000000
 #define INPUT_FILENAME "randomnumbers.bin"
@@ -23,8 +33,8 @@ int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const c
 int appendToOutput(char *string, char *filename);
 int exists(const char *fname);
 
-int comps;
-int swaps;
+unsigned long int comps;
+unsigned long int swaps;
 
 unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
 
@@ -79,7 +89,7 @@ int main(){
 	// now we benchmark all functions
 
 	fullBenchmark(quicksort, "QukS");
-
+	fullBenchmark(mergesort, "MerS");
 
 	free(arr_random);
 	free(arr_crescent);
@@ -89,26 +99,25 @@ int main(){
 }
 
 int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
-	// now benchmark the functions
+	// benchmark the functions
 
 	// random
 	for(int i=1000; i <= SIZE_MAX; i*=10){
 		memcpy((void *)arr_aux, (void *)arr_random, SIZE_MAX*sizeof(int));
-		benchmark(quicksort, arr_aux, i, sort_id, 'R');
+		benchmark(sorting_function, arr_aux, i, sort_id, 'R');
 	}
-/*// when i fix the order i can put this back
+
 	// crescent
 	for(int i=1000; i <= SIZE_MAX; i*=10){
 		memcpy((void *)arr_aux, (void *)arr_crescent, SIZE_MAX*sizeof(int));
-		benchmark(quicksort, arr_aux, i, "QukS", 'O');
+		benchmark(sorting_function, arr_aux, i, sort_id, 'O');
 	}
+
 	// decrescent
 	for(int i=1000; i <= SIZE_MAX; i*=10){
 		memcpy((void *)arr_aux, (void *)arr_decrescent, SIZE_MAX*sizeof(int));
-		benchmark(quicksort, arr_aux, i, "QukS", 'I');
+		benchmark(sorting_function, arr_aux, i, sort_id, 'I');
 	}
-//*/
-
 }
 
 // benchmark: SORTING_FUNCTION, Integer[], Integer, String, Char -> Integer
@@ -118,6 +127,7 @@ int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
 int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const char* sort_id, char arr_id){
 	comps = 0;
 	swaps = 0;
+	
 	clock_t delta = clock();
 	(*sorting_function)(array, size); // run the sorting function on the array of length size
 	delta = clock()-delta; // difference between clocks from before and after the function
@@ -129,7 +139,7 @@ int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const c
 		printf("ERROR! SORTING FAILED!\n");
 
 	char *result = (char *) malloc(sizeof(char)*100);
-	sprintf(result, "%s, %c, %d, %d, %d, %d.\n", sort_id, arr_id, size, swaps, comps, time);
+	sprintf(result, "%s, %c, %u, %lu, %lu, %u.\n", sort_id, arr_id, size, swaps, comps, time);
 	
 	int status = appendToOutput(result, OUTPUT_FILENAME);
 	free(result);

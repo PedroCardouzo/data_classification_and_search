@@ -21,19 +21,21 @@ void mergesort(int vector[], int size){
 		int *temp = (int *) malloc(sizeof(int)*size);
 
 		while(i < half_size && j < size){
-			swaps++;
+			comps++;
+			swaps += k%2; // because each 2 attribuitions will count as one swap
 			if(vector[i] <= vector[j])
 				temp[k++] = vector[i++];
 			else
 				temp[k++] = vector[j++];
 		}
-
+		swaps++;
 		if(i < half_size) // there are still elements to be transferred in the first half of temp
 			memcpy(&temp[k], &vector[i], (half_size-i)*sizeof(int));
 		else // there are still elemetns to be transferred in the second half of temp
 			memcpy(&temp[k], &vector[j], (size-j)*sizeof(int));
 
 		// now copy all the ordered temp array to the respective position in the vector to be ordered
+		swaps++;
 		memcpy(vector, temp, size*sizeof(int));
 
 		free(temp);
