@@ -1,7 +1,7 @@
 ############################# Makefile ##########################
 
 #builds all the .o files needed
-all: binaryInsertionSort.o linearInsertionSort.o selectionSort.o bubbleSort.o quicksort.o mergesort.o heapsort.o timsort.o util.o
+all: binaryInsertionSort.o linearInsertionSort.o selectionSort.o bubbleSort.o combsort.o shellsort.o quicksort.o mergesort.o heapsort.o timsort.o util.o
 
 util.o: util.c util.h
 		gcc -c util.c
@@ -17,6 +17,12 @@ selectionSort.o: selectionSort.c selectionSort.h
 
 bubbleSort.o: bubbleSort.c bubbleSort.h
 		gcc -c bubbleSort.c
+
+combsort.o: combsort.c combsort.h
+		gcc -c combsort.c
+
+shellsort.o: shellsort.c shellsort.h
+		gcc -c shellsort.c
 
 quicksort.o: quicksort.c quicksort.h
 		gcc -c quicksort.c

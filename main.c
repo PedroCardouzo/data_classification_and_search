@@ -23,7 +23,8 @@
 #include "Sorting Algorithms/selectionSort.h"
 #include "Sorting Algorithms/bubbleSort.h"
 
-
+#include "Sorting Algorithms/combsort.h"
+#include "Sorting Algorithms/shellsort.h"
 #include "Sorting Algorithms/quicksort.h"
 #include "Sorting Algorithms/mergesort.h"
 #include "Sorting Algorithms/heapsort.h"
@@ -99,7 +100,7 @@ int main(){
 	//fullBenchmark(mergesort, "MerS");
 	//fullBenchmark(heapsort, "HepS");
 	//fullBenchmark(timsort, "TimS");
-	fullBenchmark(binaryInsertionSort, "ISBL");
+	fullBenchmark(bubbleSort, "BubS");
 
 	searchBenchmark();
 
