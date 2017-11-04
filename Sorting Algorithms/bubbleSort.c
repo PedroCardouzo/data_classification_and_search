@@ -21,7 +21,7 @@ void bubbleSort(int vector[], int size){
                 noSwaps = 0;
             }
             if(OVERTIME_FLAG)
-                return 1;
+                return;
         }
     }
 }

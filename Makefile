@@ -7,7 +7,7 @@ main: SearchAlgorithms SortingAlgorithms main.o main.h
 		@echo # for blank line
 		@echo "build was successful!"
 
-main.o: main.c Sorting\ Algorithms/util.h Sorting\ Algorithms/binaryInsertionSort.h Sorting\ Algorithms/linearInsertionSort.h Sorting\ Algorithms/selectionSort.h Sorting\ Algorithms/bubbleSort.h Sorting\ Algorithms/combsort.h Sorting\ Algorithms/shellsort.h Sorting\ Algorithms/quicksort.h Sorting\ Algorithms/mergesort.h Sorting\ Algorithms/heapsort.h Sorting\ Algorithms/timsort.h 
+main.o: main.c Sorting\ Algorithms/util.h Sorting\ Algorithms/linearInsertionSort.h Sorting\ Algorithms/binaryInsertionSort.h Sorting\ Algorithms/selectionSort.h Sorting\ Algorithms/bubbleSort.h Sorting\ Algorithms/combsort.h Sorting\ Algorithms/shellsort.h Sorting\ Algorithms/quicksort.h Sorting\ Algorithms/mergesort.h Sorting\ Algorithms/heapsort.h Sorting\ Algorithms/timsort.h 
 		gcc -c main.c
 
 SortingAlgorithms: 

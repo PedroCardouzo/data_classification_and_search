@@ -18,8 +18,8 @@
 // sorting algorithms
 #include "Sorting Algorithms/util.h"
 
-#include "Sorting Algorithms/binaryInsertionSort.h"
 #include "Sorting Algorithms/linearInsertionSort.h"
+#include "Sorting Algorithms/binaryInsertionSort.h"
 #include "Sorting Algorithms/selectionSort.h"
 #include "Sorting Algorithms/bubbleSort.h"
 
@@ -97,8 +97,8 @@ int main(){
 	
 
 	// now we benchmark all functions
-	fullBenchmark(binaryInsertionSort, "ISBB");
 	fullBenchmark(linearInsertionSort, "ISBL");
+	fullBenchmark(binaryInsertionSort, "ISBB");
 	fullBenchmark(selectionSort, "SelS");
 	fullBenchmark(bubbleSort, "BubS");
 	fullBenchmark(combsort, "CbSt");
