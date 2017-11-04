@@ -1,9 +1,8 @@
-#Para escrever comentários ##
 ############################# Makefile ##########################
 all: main
 
-main: SortingAlgorithms main.o main.h
-		gcc -o exec Sorting\ Algorithms/util.o Sorting\ Algorithms/binaryInsertionSort.o Sorting\ Algorithms/linearInsertionSort.o Sorting\ Algorithms/selectionSort.o Sorting\ Algorithms/bubbleSort.o Sorting\ Algorithms/quicksort.o Sorting\ Algorithms/mergesort.o Sorting\ Algorithms/heapsort.o Sorting\ Algorithms/timsort.o main.o
+main: SearchAlgorithms SortingAlgorithms main.o main.h
+		gcc -o exec Search\ Algorithms/linearSearch.o Search\ Algorithms/binarySearch.o Sorting\ Algorithms/util.o Sorting\ Algorithms/binaryInsertionSort.o Sorting\ Algorithms/linearInsertionSort.o Sorting\ Algorithms/selectionSort.o Sorting\ Algorithms/bubbleSort.o Sorting\ Algorithms/quicksort.o Sorting\ Algorithms/mergesort.o Sorting\ Algorithms/heapsort.o Sorting\ Algorithms/timsort.o main.o
 		@echo # for blank line
 		@echo "build was successful!"
 
@@ -13,10 +12,11 @@ main.o: main.c Sorting\ Algorithms/util.h Sorting\ Algorithms/binaryInsertionSor
 SortingAlgorithms: 
 		+$(MAKE) -C Sorting\ Algorithms
 
+SearchAlgorithms:
+		+$(MAKE) -C Search\ Algorithms
+
 clean:
-		rm -rf main.o
+		rm -rf main.o exec ./Sorting\ Algorithms/*.o ./Search\ Algorithms/*.o
 
-cleanall:
-		rm -rf main.o exec ./Sorting\ Algorithms/*.o
-
-cleanr: cleanall
+cleanobj:
+		rm -rf main.o ./Sorting\ Algorithms/*.o ./Search\ Algorithms/*.o

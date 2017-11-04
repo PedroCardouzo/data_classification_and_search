@@ -1,6 +1,6 @@
 /*********************************************************
  * This program benchmarks sorting algorithms            *
- * Take a look at main.h for documentation aswell        *
+ * Take a look at main.h for documentation               *
  * The output file is defined at OUTPUT_FILENAME         *
  * The output format is :                                *
  * 	sort_id, array_type, size, swaps, comparisons, time  *
@@ -29,6 +29,9 @@
 #include "Sorting Algorithms/heapsort.h"
 #include "Sorting Algorithms/timsort.h"
 
+#include "Search Algorithms/linearSearch.h"
+#include "Search Algorithms/binarySearch.h"
+
 #include "main.h"
 
 char OVERTIME_FLAG;
@@ -37,7 +40,7 @@ unsigned long int swaps;
 
 unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
 
-	
+// see main.h for consise documentation
 int main(){
 
 	// allocating space for the arrays
@@ -93,10 +96,12 @@ int main(){
 	// now we benchmark all functions
 
 	fullBenchmark(quicksort, "QukS");
-	fullBenchmark(mergesort, "MerS");
-	fullBenchmark(heapsort, "HepS");
-	fullBenchmark(timsort, "TimS");
-	fullBenchmark(binaryInsertionSort, "ISBB");
+	//fullBenchmark(mergesort, "MerS");
+	//fullBenchmark(heapsort, "HepS");
+	//fullBenchmark(timsort, "TimS");
+	fullBenchmark(binaryInsertionSort, "ISBL");
+
+	searchBenchmark();
 
 	free(arr_random);
 	free(arr_crescent);
@@ -105,7 +110,54 @@ int main(){
 	return 0;
 }
 
-int fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
+// searchBenchmark: void -> void
+// obj.: benchmarks linearSearch and binarySearch functions
+void searchBenchmark(){
+	comps = 0;
+	swaps = 0;
+	int index;
+	
+	clock_t delta = clock();
+
+	// benchmark linearSearch
+	index = linearSearch(arr_crescent, SIZE_MAX, VALUE_TO_BE_SEARCHED);
+
+	delta = clock()-delta; // difference between clocks from before and after the function
+	int time = delta/(CLOCKS_PER_SEC/1000);
+	
+	char *result = (char *) malloc(sizeof(char)*100);
+	if(index != -1 && arr_crescent[index] == VALUE_TO_BE_SEARCHED){
+		sprintf(result, "BLin, O, %u, %lu, %lu, %u.\n", SIZE_MAX, swaps, comps, time);
+		printf("Linear Search for the element %d was successful!\n", VALUE_TO_BE_SEARCHED);
+	}else{
+		sprintf(result, "Elemento %d não está no array fornecido ou o algoritmo está errado", VALUE_TO_BE_SEARCHED);
+		printf("***ERROR*** Element %d wasn't found!\n", VALUE_TO_BE_SEARCHED);
+	}
+	
+	appendToOutput(result, OUTPUT_FILENAME);
+
+	comps = 0;
+	swaps = 0;
+
+	delta = clock();
+	index = binarySearch(arr_crescent, SIZE_MAX, VALUE_TO_BE_SEARCHED);
+	delta = clock()-delta;
+	time = delta/(CLOCKS_PER_SEC/1000);
+
+	if(index != -1 && arr_crescent[index] == VALUE_TO_BE_SEARCHED){
+		sprintf(result, "Bbin, O, %u, %lu, %lu, %u.\n", SIZE_MAX, swaps, comps, time);
+		printf("Binary Search for the element %d was successful!\n", VALUE_TO_BE_SEARCHED);
+	}else{
+		sprintf(result, "Elemento %d não está no array fornecido ou o algoritmo está errado", VALUE_TO_BE_SEARCHED);
+		printf("***ERROR*** Element %d wasn't found!\n", VALUE_TO_BE_SEARCHED);
+	}
+	appendToOutput(result, OUTPUT_FILENAME);
+}
+
+// fullBenchmark: SORTING_FUNCTION, const char* -> void
+// obj.: benchmarks the recieved sorting_function in random, 
+// crescent and decrescent array (using benchmark function)
+void fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
 	// benchmark the functions
 
 	// random

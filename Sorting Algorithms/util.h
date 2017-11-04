@@ -19,7 +19,15 @@ int isCrescent(int arr[], int size);
 // returns the number of errors
 int errorLogger(int arr[], int size);
 
-typedef void (SORTING_FUNCTION)(int*, int);
-int stressTest(SORTING_FUNCTION *sorting_function, int arr[], int size, const unsigned long int MAX_TESTS);
-int unlimitedStressTest(SORTING_FUNCTION *sorting_function, int arr[], int size);
 
+// stressTest: SORTING_FUNCTION, Integer[], Integer, const long Integer -> Integer
+// tests provided sorting function on a random array of length size up to MAX_TESTS times
+// if MAX_TESTS is 0, it tests until a failure occurs or the user force closes the program
+// if it fails, the errors are logged (see errorLogger function)
+int stressTest(SORTING_FUNCTION *sorting_function, int arr[], int size, const unsigned long int MAX_TESTS);
+
+// unlimitedStressTest: SORTING_FUNCTION, Integer[], Integer -> Integer
+// calls stressTest with 0 as the last argument.
+// it's a special case of stessTest where the algorithm runs until
+// a faliure occurs or until the user force closes it
+int unlimitedStressTest(SORTING_FUNCTION *sorting_function, int arr[], int size);

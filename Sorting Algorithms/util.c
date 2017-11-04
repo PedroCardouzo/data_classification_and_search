@@ -51,7 +51,7 @@ int errorLogger(int arr[], int size){
 }
 
 
-//uses typedef void (SORTING_FUNCTION)(int*, int); function type definition (may use another you prefer)
+//uses typedef void (SORTING_FUNCTION)(int*, int); function type definition (may use another you prefer, but you must change the sorting function type in util.h)
 
 // stressTest: SORTING_FUNCTION, Integer[], Integer, const long Integer -> Integer
 // tests provided sorting function on a random array of length size up to MAX_TESTS times

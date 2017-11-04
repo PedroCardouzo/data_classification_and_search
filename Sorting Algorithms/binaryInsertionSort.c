@@ -7,57 +7,50 @@ extern int swaps;
 //binaryInsertionSort:Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order 
 void binaryInsertionSort(int vector[], int size){
-	int i;
 
-	for(i=0; i<size; i++){
-		binaryInsertion(vector, vector[i], i);
-	}
-
+    for(int i=1; i<size && !OVERTIME_FLAG; i++){
+        if(vector[i]< vector[i-1])
+            binaryInsertion(vector, i+1, vector[i]);
+    }
 }
 
 
 // binaryInsertion: Integer[], Integer -> void
 // obj.: recieves a vector and makes the swaps to put it in a crescent order
-void binaryInsertion(int vector[], int n, int size){
-	int i;
-	int temp;
-	int start = binarySearch(vector, n, 0, size);
+void binaryInsertion(int vector[], int size, int n){
+    int temp;
+    int start = binaryResearch(vector, size, n);
 
-	for(i= start;i<size;i++){
-		swaps++;
+    for(int i= start;i<size && !OVERTIME_FLAG;i++){
+        swaps++;
         temp = n;
-		n = vector[i];
-		vector[i] = temp;
-        if(OVERTIME_FLAG)
-            return;
-	}
-    
-    swaps++;
-    vector[i]= n;
+        n = vector[i];
+        vector[i] = temp;
+    }
 }
 
 
 // binarySearch: Integer[], Integer -> Interger
 // obj.: returns the position where the number should be located
-int binarySearch(int vector[], int n, int start, int end){
-    int i = (start + end)/2;
+int binaryResearch(int vector[], int size, int n){
+    int i, start=0, end = size-1;
 
-    if(end == start){
-        return end;
-    }else{
-
-    	comps++;
+    while(end!= start){
+        i = (start + end)/2;
+        comps++;
 
         if(n > vector[i]){
-            if(i == start){
+            if(i == start)
                 i++;
-            }
-            binarySearch(vector, n, i, end);
+            
+            start = i;
         }else{
-            if(i == end){
+            if(i == end)
                 i++;
-            }
-            binarySearch(vector, n, start, i);
+            
+            end = i;
         }
     }
+
+    return end;
 }

@@ -4,6 +4,10 @@
 extern int comps; //#
 extern int swaps; //#
 
+// heapfy: Integer[], Integer, Integer -> void
+// obj.: recieves an array, the heap_size, and the index which 
+// we want to make sure that it and its left and right children
+//  form a heap and makes it a heap
 void heapfy(int arr[], int heap_size, int i){
 	int larger, aux, is_a_heap=0; 
 	while(!is_a_heap){

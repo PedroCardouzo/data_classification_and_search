@@ -88,7 +88,9 @@ void quicksort(int arr[], int size){
 	QuickSort(arr, 0, size-1);
 }
 
-// Unoptimized classic quicksort
+
+// quicksort: Integer[], Integer -> void
+// obj.: orders an array using the classic quicksort algorithm (unoptmized)
 void quicksort_old(int arr[], int low, int high){
 	int pivot = arr[high];
 
