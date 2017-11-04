@@ -9,7 +9,7 @@
 #define SIZE_MAX 10000000
 #define INPUT_FILENAME "randomnumbers.bin"
 #define OUTPUT_FILENAME "R00275739-00268612.txt"
-#define TIME_LIMIT 5 // time is in seconds
+#define TIME_LIMIT 3600 // time is in seconds
 #define VALUE_TO_BE_SEARCHED 1438215
 
 // error log:

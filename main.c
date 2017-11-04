@@ -65,14 +65,7 @@ int main(){
 		}
 		fclose(input);
 	}
-	// create arrays (random, ordered, unordered)
-	memcpy((void *)arr_crescent, (void *)arr_random, SIZE_MAX*sizeof(int));
-	quicksort(arr_crescent, SIZE_MAX); // arr_crescent recieves the crescent ordered version of arr_random
-
-	for(int i=0; i < SIZE_MAX; i++)
-		arr_decrescent[i] =  arr_crescent[SIZE_MAX-1-i]; // arr_decrescent recieves the decrescent ordered version of arr_random
-
-	// open output file
+	// create output file
 	if(exists(OUTPUT_FILENAME)){
 		printf("The file %s already exists.\nDo you want to overwrite it? (y for yes) ", OUTPUT_FILENAME);
 		char overwrite = 0;
@@ -89,20 +82,33 @@ int main(){
 		return 4;
 	}else
 		fclose(output); // file will be opened each time we write a line to it, so we can close it now
+	
+
+	// create arrays (random, ordered, unordered)
+	memcpy((void *)arr_crescent, (void *)arr_random, SIZE_MAX*sizeof(int));
+	quicksort(arr_crescent, SIZE_MAX); // arr_crescent recieves the crescent ordered version of arr_random
+
+	for(int i=0; i < SIZE_MAX; i++)
+		arr_decrescent[i] =  arr_crescent[SIZE_MAX-1-i]; // arr_decrescent recieves the decrescent ordered version of arr_random
+
 		
 	// get time interruption ready 
 	signal(SIGALRM, set_OVERTIME_FLAG);
 	
 
 	// now we benchmark all functions
-
-	fullBenchmark(quicksort, "QukS");
-	//fullBenchmark(mergesort, "MerS");
-	//fullBenchmark(heapsort, "HepS");
-	//fullBenchmark(timsort, "TimS");
+	fullBenchmark(binaryInsertionSort, "ISBB");
+	fullBenchmark(linearInsertionSort, "ISBL");
+	fullBenchmark(selectionSort, "SelS");
+	fullBenchmark(bubbleSort, "BubS");
+	fullBenchmark(combsort, "CbSt");
 	fullBenchmark(shellsort, "SheS");
+	fullBenchmark(quicksort, "QukS");
+	fullBenchmark(mergesort, "MerS");
+	fullBenchmark(heapsort, "HepS");
+	fullBenchmark(timsort, "TimS");
 
-	searchBenchmark();
+	searchBenchmark(); // benchmarks linear search and binary search for VALUE_TO_BE_SEARCHED element
 
 	free(arr_random);
 	free(arr_crescent);

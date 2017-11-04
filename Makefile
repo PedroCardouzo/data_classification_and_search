@@ -1,8 +1,9 @@
 ############################# Makefile ##########################
 all: main
 
+OUTPUT_NAME = exec
 main: SearchAlgorithms SortingAlgorithms main.o main.h
-		gcc -o exec Search\ Algorithms/linearSearch.o Search\ Algorithms/binarySearch.o Sorting\ Algorithms/util.o Sorting\ Algorithms/binaryInsertionSort.o Sorting\ Algorithms/linearInsertionSort.o Sorting\ Algorithms/selectionSort.o Sorting\ Algorithms/bubbleSort.o Sorting\ Algorithms/combsort.o Sorting\ Algorithms/shellsort.o Sorting\ Algorithms/quicksort.o Sorting\ Algorithms/mergesort.o Sorting\ Algorithms/heapsort.o Sorting\ Algorithms/timsort.o main.o
+		gcc -o $(OUTPUT_NAME) Search\ Algorithms/linearSearch.o Search\ Algorithms/binarySearch.o Sorting\ Algorithms/util.o Sorting\ Algorithms/binaryInsertionSort.o Sorting\ Algorithms/linearInsertionSort.o Sorting\ Algorithms/selectionSort.o Sorting\ Algorithms/bubbleSort.o Sorting\ Algorithms/combsort.o Sorting\ Algorithms/shellsort.o Sorting\ Algorithms/quicksort.o Sorting\ Algorithms/mergesort.o Sorting\ Algorithms/heapsort.o Sorting\ Algorithms/timsort.o main.o
 		@echo # for blank line
 		@echo "build was successful!"
 
@@ -16,7 +17,7 @@ SearchAlgorithms:
 		+$(MAKE) -C Search\ Algorithms
 
 clean:
-		rm -rf main.o exec ./Sorting\ Algorithms/*.o ./Search\ Algorithms/*.o
+		rm -rf main.o $(OUTPUT_NAME) ./Sorting\ Algorithms/*.o ./Search\ Algorithms/*.o
 
 cleanobj:
 		rm -rf main.o ./Sorting\ Algorithms/*.o ./Search\ Algorithms/*.o
