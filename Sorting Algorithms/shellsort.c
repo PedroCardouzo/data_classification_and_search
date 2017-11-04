@@ -1,5 +1,8 @@
 #include "shellsort.h"
 
+extern int comps;
+extern int swaps;
+
 // shellsort: Integer[] Integer -> void
 // uses shellsort method with a gap sequence discovered by Vaughan Pratt
 void shellsort(int arr[], int size){
@@ -12,11 +15,13 @@ void shellsort(int arr[], int size){
         	value = arr[i];
 			j = i - gap;
 			
+			comps++;
 			while (j >= 0 && value < arr[j]) {
+				swaps++;
 				arr [j + gap] = arr[j];
 				j -= gap;
 			}
-			
+			swaps++;
 			arr [j + gap] = value;
         }
 }

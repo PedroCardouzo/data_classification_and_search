@@ -100,7 +100,7 @@ int main(){
 	//fullBenchmark(mergesort, "MerS");
 	//fullBenchmark(heapsort, "HepS");
 	//fullBenchmark(timsort, "TimS");
-	fullBenchmark(bubbleSort, "BubS");
+	fullBenchmark(shellsort, "SheS");
 
 	searchBenchmark();
 
@@ -191,7 +191,7 @@ int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const c
 	
 	clock_t delta = clock();
 	
-	alarm(TIME_LIMIT); // sets a time interruption in TIME_LIMIT seconds
+	//alarm(TIME_LIMIT); // sets a time interruption in TIME_LIMIT seconds
 	
 	(*sorting_function)(array, size); // run the sorting function on the array of length size
 	
