@@ -1,3 +1,9 @@
+// heapsort: Integer[], Integer -> void
+// recieves an array and its size and returns it ordered in crescenting order
+// Time complexity: θ(n logn)
+// Space complexity: O(1) (auxiliary), O(n) total
+void heapsort(int heap[], int heap_size);
+
 // heapfy: Integer[], Integer, Integer -> void
 // obj.: recieves an array, the heap_size, and the index which 
 // we want to make sure that it and its left and right children
@@ -15,7 +21,3 @@ void build_heap(int arr[], int heap_size);
 // (now the last element is not in the array anymore) 
 // and heapfy is called on the first element to make the array a heap again
 void heapExtract(int heap[], int *heap_size);
-
-// heapsort: Integer[], Integer -> void
-// recieves an array and its size and returns it ordered in crescenting order
-void heapsort(int heap[], int heap_size);

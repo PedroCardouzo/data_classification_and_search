@@ -97,15 +97,25 @@ int main(){
 	
 
 	// now we benchmark all functions
+	printf("ISBL:\n");
 	fullBenchmark(linearInsertionSort, "ISBL");
+	printf("ISBB:\n");
 	fullBenchmark(binaryInsertionSort, "ISBB");
+	printf("SelS:\n");
 	fullBenchmark(selectionSort, "SelS");
+	printf("BubS:\n");
 	fullBenchmark(bubbleSort, "BubS");
+	printf("CbSt:\n");
 	fullBenchmark(combsort, "CbSt");
+	printf("SheS:\n");
 	fullBenchmark(shellsort, "SheS");
+	printf("QukS:\n");
 	fullBenchmark(quicksort, "QukS");
+	printf("MerS:\n");
 	fullBenchmark(mergesort, "MerS");
+	printf("HepS:\n");
 	fullBenchmark(heapsort, "HepS");
+	printf("TimS:\n");
 	fullBenchmark(timsort, "TimS");
 
 	searchBenchmark(); // benchmarks linear search and binary search for VALUE_TO_BE_SEARCHED element
@@ -197,7 +207,7 @@ int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const c
 	
 	clock_t delta = clock();
 	
-	//alarm(TIME_LIMIT); // sets a time interruption in TIME_LIMIT seconds
+	alarm(TIME_LIMIT); // sets a time interruption in TIME_LIMIT seconds
 	
 	(*sorting_function)(array, size); // run the sorting function on the array of length size
 	

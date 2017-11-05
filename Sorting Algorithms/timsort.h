@@ -5,6 +5,12 @@ struct STRUCT_STACK{
 	STACK *next;
 };
 
+// timsort: Integer[] Integer -> void
+// obj.: sorts a vector using timsort sorting algorithm
+// Time complexity: θ(n logn)
+// Space complexity: O(n/2) (auxiliary), O(1.5n) total
+void timsort(int vector[], int size);
+
 // initializeStack: void -> STACK**
 // obj.: this function returns a default initialized STACK** (pointer to a stack that it initializes)
 STACK** initializeStack();
@@ -36,7 +42,3 @@ void merge(int vec[], int len1, int len2);
 // we are left with half (or half+1 if odd number of stacks) at the end
 // of each iteration. It keeps doing it until all stacks are merged
 void mergeStacks(STACK **stack);
-
-// timsort: Integer[] Integer -> void
-// obj.: sorts a vector using timsort sorting algorithm
-void timsort(int vector[], int size);

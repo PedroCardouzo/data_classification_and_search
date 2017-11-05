@@ -6,6 +6,8 @@ extern int swaps;
 
 //selectionSort:Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order 
+// Time complexity: θ(n²)
+// Space complexity: O(1) (auxiliary), O(n) total
 void selectionSort(int vector[], int size){
     int i;
     int j;

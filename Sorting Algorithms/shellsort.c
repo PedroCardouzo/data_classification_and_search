@@ -18,10 +18,10 @@ void shellsort(int arr[], int size){
 			comps++;
 			while (j >= 0 && value < arr[j]) {
 				swaps++;
-				arr [j + gap] = arr[j];
+				arr[j + gap] = arr[j];
 				j -= gap;
 			}
 			swaps++;
-			arr [j + gap] = value;
+			arr[j + gap] = value;
         }
 }

@@ -1,5 +1,7 @@
 //binaryInsertionSort:Integer[], Integer -> void
 // obj.: recieves a vector and orders it in a crescent order 
+// Time complexity: Ω(n), O(n²)
+// Space complexity: O(1) (auxiliary), O(n) total
 void binaryInsertionSort(int vector[], int size);
 
 // binaryInsertion: Integer[], Integer -> void
