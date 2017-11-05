@@ -1,5 +1,5 @@
 /*********************************************************
- * Software developed by                                  *
+ * Software developed by                                 *
  * Pedro Cardouzo and Luma Beserra                       *
  * This program benchmarks sorting and search algorithms *
  * Take a look at main.h for documentation               *

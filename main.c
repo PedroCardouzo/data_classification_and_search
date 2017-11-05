@@ -1,5 +1,5 @@
 /*********************************************************
- * Software developed by                                  *
+ * Software developed by                                 *
  * Pedro Cardouzo and Luma Beserra                       *
  * This program benchmarks sorting and search algorithms *
  * Take a look at main.h for documentation               *
@@ -32,6 +32,7 @@
 #include "Sorting Algorithms/heapsort.h"
 #include "Sorting Algorithms/timsort.h"
 
+// search algorithms
 #include "Search Algorithms/linearSearch.h"
 #include "Search Algorithms/binarySearch.h"
 
