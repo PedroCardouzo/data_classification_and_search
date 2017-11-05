@@ -2,14 +2,14 @@
  * Software developed by                                 *
  * Pedro Cardouzo and Luma Beserra                       *
  * This program benchmarks sorting and search algorithms *
- * Take a look at main.h for documentation               *
+ * Take a look at main.h and Readme.md for documentation *
  * The output file is defined at OUTPUT_FILENAME         *
  * The output format is :                                *
  * 	sort_id, array_type, size, swaps, comparisons, time  *
  *********************************************************/
 
 #define SIZE_MAX 10000000
-#define INPUT_FILENAME "randomnumbers.bin"
+#define INPUT_FILENAME "randomnumbers.bin" // full path from main.c containing folder
 #define OUTPUT_FILENAME "R00275739-00268612.txt"
 #define TIME_LIMIT 3600 // time is in seconds
 #define VALUE_TO_BE_SEARCHED 1438215

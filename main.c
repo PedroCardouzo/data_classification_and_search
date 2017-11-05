@@ -2,7 +2,7 @@
  * Software developed by                                 *
  * Pedro Cardouzo and Luma Beserra                       *
  * This program benchmarks sorting and search algorithms *
- * Take a look at main.h for documentation               *
+ * Take a look at main.h and Readme.md for documentation *
  * The output file is defined at OUTPUT_FILENAME         *
  * The output format is :                                *
  * 	sort_id, array_type, size, swaps, comparisons, time  *
