@@ -41,25 +41,25 @@ char OVERTIME_FLAG;
 unsigned long int comps;
 unsigned long int swaps;
 
-unsigned int *arr_random, *arr_crescent, *arr_decrescent, *arr_aux;
+unsigned int *A0, *A1, *A2, *arr_aux;
 
 // see main.h for consise documentation
 int main(){
 
 	// allocating space for the arrays
-	arr_random = (int*) malloc(SIZE_MAX*sizeof(int));
-	arr_crescent = (int*) malloc(SIZE_MAX*sizeof(int));
-	arr_decrescent = (int*) malloc(SIZE_MAX*sizeof(int));
+	A0 = (int*) malloc(SIZE_MAX*sizeof(int));
+	A1 = (int*) malloc(SIZE_MAX*sizeof(int));
+	A2 = (int*) malloc(SIZE_MAX*sizeof(int));
 	arr_aux = (int*) malloc(SIZE_MAX*sizeof(int));
 
 
-	// checks if the input file exists, if it does, read its information into arr_random
+	// checks if the input file exists, if it does, read its information into A0
 	FILE *input = fopen(INPUT_FILENAME, "rb");
 	if(!input){
 		printf("Error! Couldn't open or find %s in current directory!\n", INPUT_FILENAME);
 		return 1;
 	}else{
-		if(fread(arr_random, sizeof(int), SIZE_MAX, input) == SIZE_MAX)
+		if(fread(A0, sizeof(int), SIZE_MAX, input) == SIZE_MAX)
 			printf("File reading was successful!\n");
 		else{
 			printf("Fail on file reading\n");
@@ -87,11 +87,11 @@ int main(){
 	
 
 	// create arrays (random, ordered, unordered)
-	memcpy((void *)arr_crescent, (void *)arr_random, SIZE_MAX*sizeof(int));
-	quicksort(arr_crescent, SIZE_MAX); // arr_crescent recieves the crescent ordered version of arr_random
+	memcpy((void *)A1, (void *)A0, SIZE_MAX*sizeof(int));
+	quicksort(A1, SIZE_MAX); // A1 recieves the crescent ordered version of A0
 
 	for(int i=0; i < SIZE_MAX; i++)
-		arr_decrescent[i] =  arr_crescent[SIZE_MAX-1-i]; // arr_decrescent recieves the decrescent ordered version of arr_random
+		A2[i] =  A1[SIZE_MAX-1-i]; // A2 recieves the decrescent ordered version of A0
 
 		
 	// get time interruption ready 
@@ -122,9 +122,9 @@ int main(){
 
 	searchBenchmark(); // benchmarks linear search and binary search for VALUE_TO_BE_SEARCHED element
 
-	free(arr_random);
-	free(arr_crescent);
-	free(arr_decrescent);
+	free(A0);
+	free(A1);
+	free(A2);
 	free(arr_aux);
 	return 0;
 }
@@ -139,13 +139,13 @@ void searchBenchmark(){
 	clock_t delta = clock();
 
 	// benchmark linearSearch
-	index = linearSearch(arr_crescent, SIZE_MAX, VALUE_TO_BE_SEARCHED);
+	index = linearSearch(A1, SIZE_MAX, VALUE_TO_BE_SEARCHED);
 
 	delta = clock()-delta; // difference between clocks from before and after the function
 	int time = delta/(CLOCKS_PER_SEC/1000);
 	
 	char *result = (char *) malloc(sizeof(char)*100);
-	if(index != -1 && arr_crescent[index] == VALUE_TO_BE_SEARCHED){
+	if(index != -1 && A1[index] == VALUE_TO_BE_SEARCHED){
 		sprintf(result, "BLin, O, %u, %lu, %lu, %u.\n", SIZE_MAX, swaps, comps, time);
 		printf("Linear Search for the element %d was successful!\n", VALUE_TO_BE_SEARCHED);
 	}else{
@@ -159,11 +159,11 @@ void searchBenchmark(){
 	swaps = 0;
 
 	delta = clock();
-	index = binarySearch(arr_crescent, SIZE_MAX, VALUE_TO_BE_SEARCHED);
+	index = binarySearch(A1, SIZE_MAX, VALUE_TO_BE_SEARCHED);
 	delta = clock()-delta;
 	time = delta/(CLOCKS_PER_SEC/1000);
 
-	if(index != -1 && arr_crescent[index] == VALUE_TO_BE_SEARCHED){
+	if(index != -1 && A1[index] == VALUE_TO_BE_SEARCHED){
 		sprintf(result, "Bbin, O, %u, %lu, %lu, %u.\n", SIZE_MAX, swaps, comps, time);
 		printf("Binary Search for the element %d was successful!\n", VALUE_TO_BE_SEARCHED);
 	}else{
@@ -181,19 +181,19 @@ void fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
 
 	// random
 	for(int i=1000; i <= SIZE_MAX; i*=10){
-		memcpy((void *)arr_aux, (void *)arr_random, SIZE_MAX*sizeof(int));
+		memcpy((void *)arr_aux, (void *)A0, SIZE_MAX*sizeof(int));
 		benchmark(sorting_function, arr_aux, i, sort_id, 'R');
 	}
 
 	// crescent
 	for(int i=1000; i <= SIZE_MAX; i*=10){
-		memcpy((void *)arr_aux, (void *)arr_crescent, SIZE_MAX*sizeof(int));
+		memcpy((void *)arr_aux, (void *)A1, SIZE_MAX*sizeof(int));
 		benchmark(sorting_function, arr_aux, i, sort_id, 'O');
 	}
 
 	// decrescent
 	for(int i=1000; i <= SIZE_MAX; i*=10){
-		memcpy((void *)arr_aux, (void *)arr_decrescent, SIZE_MAX*sizeof(int));
+		memcpy((void *)arr_aux, (void *)A2, SIZE_MAX*sizeof(int));
 		benchmark(sorting_function, arr_aux, i, sort_id, 'I');
 	}
 }
