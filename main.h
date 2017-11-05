@@ -1,5 +1,7 @@
 /*********************************************************
- * This program benchmarks sorting algorithms            *
+ * Software developed by                                  *
+ * Pedro Cardouzo and Luma Beserra                       *
+ * This program benchmarks sorting and search algorithms *
  * Take a look at main.h for documentation               *
  * The output file is defined at OUTPUT_FILENAME         *
  * The output format is :                                *
