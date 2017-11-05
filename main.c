@@ -203,6 +203,8 @@ void fullBenchmark(SORTING_FUNCTION *sorting_function, const char* sort_id){
 // evaluates a sorting function and returns a string with its benchmark, of the following format:
 // "sort_id, arr_id, size of array, number of swaps, number of comparisons, elapsed time"
 // the returned value a Integer where 0 is successful and any other number is a error code
+// the benchmark time is limited by TIME_LIMIT constant. If the algorithm being benchmarked
+// passes the time limit it's time, comparisons and swaps numbers are substituted by '*'
 int benchmark(SORTING_FUNCTION *sorting_function, int array[], int size, const char* sort_id, char arr_id){
 	OVERTIME_FLAG = 0;
 	comps = 0;
